@@ -1,65 +1,85 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View, TextInput, Button, Image} from 'react-native';
-import birds from './assets/birds.png';
+import {useState} from "react";
+import {StatusBar} from "expo-status-bar";
+import {StyleSheet, Text, View, Image, ImageBackground} from "react-native";
+import birds from "./assets/birds.png";
+import background from "./assets/background.png";
+import StartGameScreen from "./screens/StartGameScreen";
+
 
 export default function App() {
-    return (
-        <View style={styles.appContainer}>
-            <View style={styles.headerContainer}>
-                <Text style={styles.header}>Welcome to ~BirdQuiz~</Text>
-            </View>
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.textInput} placeholder={"Bird Count"}/>
-                <Button title={"Go!"}/>
-            </View>
-            <View style={styles.imageContainer}>
-            <Image
-                style={styles.image}
-                source={birds}
+    const [birdCount, setBirdCount] = useState("0");
 
-            />
-            </View>
-        </View>
-    );
+    const birdCountInputHandler = (enteredText) => {
+        //allow only numbers
+        if (enteredText.match(/^\d*(\.\d+)?$/)) {
+            setBirdCount(enteredText);
+        }
+    }
+
+    const addBirdCountHandler = () => {
+        console.log(birdCount);
+    }
+
+    return (
+        <>
+            <StatusBar style="light"/>
+            <ImageBackground source={background} resizeMode="cover" style={styles.appContainer} imageStyle={{opacity: 0.8}}>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.header}>~BirdQuiz~</Text>
+                </View>
+                <View style={styles.gameContainer}>
+                    <StartGameScreen/>
+                </View>
+                <View style={styles.imageContainer}>
+                    <Image
+                        style={styles.image}
+                        source={birds}
+
+                    />
+                </View>
+            </ImageBackground>
+        </>
+    )
+        ;
 }
 
 const styles = StyleSheet.create({
     appContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
         paddingTop: 50,
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
     },
     headerContainer: {
         flex: 1,
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "center",
     },
     header: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
-        padding: 10,
+        padding: 20,
+        color: "white"
     },
-    inputContainer: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-
+    gameContainer: {
+        flex: 3,
     },
     textInput: {
         width: "80%",
         borderWidth: 1,
         borderColor: "#cccccc",
         marginRight: 8,
-        padding: 8
+        padding: 8,
+        borderRadius: 5,
+        backgroundColor: "white",
     },
     imageContainer: {
-        flex: 8,
-        justifyContent: "center",
+        flex: 2,
+        justifyContent: "flex-end",
         alignItems: "center"
     },
     image: {
-        width: 303,
-        height: 210,
+        width: 350,
+        height: 260,
     },
 });
