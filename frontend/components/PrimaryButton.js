@@ -1,10 +1,11 @@
 import {View, Text, StyleSheet, Pressable} from "react-native";
+import Colors from "../constants/colors";
 
-const PrimaryButton = (props) => {
+const PrimaryButton = ({text, onButtonClick}) => {
     return (
         <View style={styles.buttonContainer}>
-            <Pressable style={styles.buttonInner} android_ripple={{color: "black"}} onPress={props.onPress}>
-                    <Text style={styles.buttonText}>{props.text}</Text>
+            <Pressable style={styles.buttonInner} android_ripple={{color: "black"}} onPress={onButtonClick}>
+                    <Text style={styles.buttonText}>{text}</Text>
             </Pressable>
         </View>
     )
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     buttonInner: {
-        backgroundColor: "#FD805AFF",
+        backgroundColor: Colors.primary,
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",

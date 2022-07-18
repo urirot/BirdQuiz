@@ -4,6 +4,7 @@ import MenuScreen from "./screens/MenuScreen";
 import GameScreen from "./screens/GameScreen";
 import background from "./assets/background.png";
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Colors from "./constants/colors";
 
 export default function App() {
     const [isInGame, setIsInGame] = useState(false);
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     statusBar: {
-        backgroundColor: "rgba(34, 78, 173, 0.9)",
+        backgroundColor: Colors.layout,
         textDecorationColor: "white"
     }
 

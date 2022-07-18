@@ -3,14 +3,14 @@ import PrimaryButton from "../components/PrimaryButton";
 import birds from "../assets/birds.png";
 
 
-const MenuScreen = (props) => {
+const MenuScreen = ({setStartGame}) => {
     return (
         <>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>~BirdQuiz~</Text>
             </View>
             <View style={styles.buttonsContainer}>
-                <PrimaryButton onPress={props.setStartGame} text={"Quiz Me!"}></PrimaryButton>
+                <PrimaryButton onButtonClick={setStartGame} text={"Quiz Me!"}></PrimaryButton>
                 <PrimaryButton text={"Statistics"}></PrimaryButton>
                 <PrimaryButton text={"Settings"}></PrimaryButton>
             </View>

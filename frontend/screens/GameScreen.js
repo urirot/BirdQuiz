@@ -1,19 +1,19 @@
-import {Image, StyleSheet, Text, View} from "react-native"
-import {useCallback, useEffect, useRef, useState} from "react";
+import {StyleSheet, Text, View, TextInput, Button} from "react-native"
+import {useEffect, useState} from "react";
 import _ from "lodash";
+import CarouselWrapper from "../components/CarouselWrapper";
 
-import Carousel from 'react-native-snap-carousel';
 
 const images1 = [
-    require("../assets/dummy-data/Fulicaatra/images4.jpg"),
-    require("../assets/dummy-data/Fulicaatra/images7.jpg"),
-    require("../assets/dummy-data/Fulicaatra/images10.jpg"),
+    "https://storage.googleapis.com/bird_images_bird_quiz/Fulicaatra/images10.jpg",
+    "https://storage.googleapis.com/bird_images_bird_quiz/Fulicaatra/images4.jpg",
+    "https://storage.googleapis.com/bird_images_bird_quiz/Fulicaatra/images7.jpg",
 ]
 
 const images2 = [
-    require("../assets/dummy-data/Anserfabalis/images4.jpg"),
-    require("../assets/dummy-data/Anserfabalis/images7.jpg"),
-    require("../assets/dummy-data/Anserfabalis/images10.jpg"),
+    "https://storage.googleapis.com/bird_images_bird_quiz/Anserfabalis/images10.jpg",
+    "https://storage.googleapis.com/bird_images_bird_quiz/Anserfabalis/images4.jpg",
+    "https://storage.googleapis.com/bird_images_bird_quiz/Anserfabalis/images7.jpg",
 ]
 
 const images = [images1, images2];
@@ -21,8 +21,6 @@ const images = [images1, images2];
 const GameScreen = () => {
     const [round, setRound] = useState(0);
     const [birdImages, setBirdImages] = useState(null);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const ref = useRef(null);
 
     const getImagesAPI = (round) => {
         return images[round];
@@ -35,59 +33,50 @@ const GameScreen = () => {
         setBirdImages(birdImages);
     }, [round]);
 
-
-    const renderItem = useCallback(({item, index}) => {
-        return (
-            <View>
-                <Image
-                    source={item}
-                    style={styles.image}
-                />
-            </View>
-        );
-    }, []);
-
     return (
-        <View style={styles.screen}>
-            {round < NUMBER_OF_ROUNDS ?
-                <>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>
-                            Round {round + 1}
-                        </Text>
-                    </View>
+        round < NUMBER_OF_ROUNDS ?
+            <View style={styles.rootContainer}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        Round {round + 1}
+                    </Text>
+                </View>
 
+                <View style={styles.gameContainer}>
                     {birdImages !== null ?
-                        <View style={styles.carouselContainer}>
-                            <Carousel
-                                layout={"default"}
-                                ref={ref}
-                                data={birdImages}
-                                sliderWidth={300}
-                                itemWidth={300}
-                                renderItem={renderItem}
-                                onSnapToItem={(index) => setActiveIndex(index)}
-                            />
-                        </View>
+                        <>
+                            <View style={styles.carouselContainer}>
+                                <CarouselWrapper images={birdImages}/>
+                            </View>
+                            <View style={styles.actionsContainer}>
+                                <View style={styles.inputContainer}>
+                                    <TextInput style={{backgroundColor: "white"}}/>
+                                </View>
+                                <View style={styles.buttonsContainer}>
+                                    <Button title={"Enter"}></Button>
+                                    <Button title={"Skip"}></Button>
+                                </View>
+                            </View>
+
+                        </>
                         : <Text>Loading...</Text>}
-                </> :
-
+                </View>
+            </View> :
+            <View style={styles.titleContainer}>
                 <Text>Game Over</Text>
-            }
-        </View>
-
+            </View>
     )
 }
 
 const styles = StyleSheet.create({
-    screen: {
+    rootContainer: {
         flex: 1,
-        padding: 24
+        marginTop: 50,
     },
     titleContainer: {
-        flex: 1,
+        flex: 2,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
     },
     title: {
         fontSize: 28,
@@ -95,15 +84,30 @@ const styles = StyleSheet.create({
         padding: 20,
         color: "white",
     },
-    image: {
-        width: null,
-        height: 200,
-        borderRadius: 5,
+    gameContainer: {
+        flex: 5,
+        justifyContent: "flex-start",
+        minHeight: 200
     },
     carouselContainer: {
-        flex: 3,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        flex: 4
+    },
+    actionsContainer: {
+        backgroundColor: "rgba(0,0,0, 0.5a)",
+        flex: 1,
+        padding: 20
+    },
+    buttonsContainer: {
+        paddingHorizontal: 50,
+        flexDirection: "row",
+        alignItems: "flex-start",
+        justifyContent: "space-around",
+        flex: 2
+    },
+    inputContainer: {
+        flex: 2
     }
 });
 
