@@ -1,7 +1,6 @@
 """
 Tests for models
 """
-from decimal import Decimal
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
@@ -51,11 +50,16 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
-    # def test_create_bird(self):
-    #     """Tests creating a bird is successful"""
-    #     bird = models.Bird.objects.create(
-    #         hebrew_name="בולבול מצוי",
-    #         image_url="https://storage.googleapis.com/bird_images_bird_quiz/Anserfabalis/images7.jpg",
-    #     )
-    #
-    #     self.assertEqual(str(bird), bird.hebrew_name)
+    def test_create_bird(self):
+        """Tests creating a bird is successful"""
+        user = get_user_model().objects.create_user(
+            'test@example.com',
+            'testpass123'
+        )
+        bird = models.Bird.objects.create(
+            user=user,
+            hebrew_name="בולבול מצוי",
+            image_url="https://storage.googleapis.com/bird_images_bird_quiz/Anserfabalis/images7.jpg",
+        )
+
+        self.assertEqual(str(bird), bird.hebrew_name)

@@ -2,7 +2,6 @@
 Database models
 """
 
-from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -46,10 +45,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
 
-# class Bird(models.Model):
-#     """Bird Object"""
-#     hebrew_name = models.CharField(max_length=255)
-#     image_url = models.CharField(max_length=255)
-#
-#     def __str__(self):
-#         return self.hebrew_name
+class Bird(models.Model):
+    """Bird Object"""
+    hebrew_name = models.CharField(max_length=255)
+    image_url = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.hebrew_name
